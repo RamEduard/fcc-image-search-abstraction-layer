@@ -1,34 +1,27 @@
-var express      = require('express'),
-	googleImages = require('google-images'),
-    googleapis   = require('googleapis'),
-    customsearch = googleapis.customsearch('v1')
-    db           = require('../db')
+var express = require('express'),
+	Search  = require('bing.search'),
+	util    = require('util'),
+    db      = require('../db')
 
 module.exports = function(parent) {
-	var app    = express(),
-		client = googleImages(app.get('cx'), app.get('cgs_api_key'))
+	var app    = express()
 
 	app.get('/api/image-search/:query', function(request, response) {
-		var query = request.params.query,
-		    page  = request.query.page || 1
+		var query  = request.params.query,
+		    offset = request.query.offset || 10,
+		    search = new Search(app.get('bing_api_key'))
 
 		db.newHistory(new db.History({
 			query: query,
 			date: new Date()
 		}))
 
-		/*customsearch.cse.list({cx:app.get('cx'), q:query, auth:app.get('cgs_api_key')}, function(err, resp) {
-			if (err) {
-		  		console.log('An error ocurred: ', err)
-		  		return
-		  	}
-			console.log('Result: ' + resp.searchInformation.formattedTotalResults);
-			if (resp.items && resp.items.length > 0) {
-		  		console.log('First result name is ' + resp.items[0].title);
-		  	}
-		})*/
-		client.search(query, {page:page}).then(function(images) {
-			response.json(images)
+		search.images(query, {top:offset}, function(err, images) {
+			if (err) throw err
+
+			response.send(images.map(function(image) {
+				return image
+			}))
 		})
 	})
 

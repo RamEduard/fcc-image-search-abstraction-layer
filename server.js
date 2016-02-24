@@ -8,10 +8,8 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.set('port', (process.env.PORT || 5000))
 app.set('app_url', 'https://image-google-search.herokuapp.com')
-
-// Custom Google Search vars
-app.set('cx', '007195763285923207002:l08areodeh4') 
-app.set('cgs_api_key', 'AIzaSyClNM3HuNlA0Q-NLG_aBjbNglah4Y4i7Lw')
+// Bing API_KEY
+app.set('bing_api_key', 'niy2NLWsyAYs6VMp4D4os/d2R+xJS+7tilu1kDIcab4')
 
 require('./controllers/index')(app)
 require('./controllers/api')(app)

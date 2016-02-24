@@ -1,6 +1,6 @@
 {
   "name": "image-search-abstraction-layer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Image Search Abstraction Layer for FreeCodeCamp",
   "main": "server.js",
   "scripts": {
@@ -22,10 +22,9 @@
   },
   "homepage": "https://github.com/RamEduard/fcc-image-search-abstraction-layer#readme",
   "dependencies": {
+    "bing.search": "^1.0.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
-    "google-images": "^1.0.0",
-    "googleapis": "^2.1.7",
     "mongoose": "^4.4.5"
   }
 }
